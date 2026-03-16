@@ -1,0 +1,69 @@
+.chat-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.chat-box {
+  border: 1px solid #ddd;
+  height: 500px;
+  overflow-y: auto;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  max-width: 80%;
+  line-height: 1.5;
+}
+
+.message.user {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+.message.librarian {
+  background-color: #e9ecef;
+  color: black;
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+
+.input-form {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  padding: 0 24px;
+  background-color: #10a37f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0d8c6d;
+}
