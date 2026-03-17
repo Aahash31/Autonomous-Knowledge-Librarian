@@ -16,9 +16,11 @@ function App() {
     setMessages(newMessages)
     setInput('')
 
+    // Fetch API Url from environment file
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
     try {
       // Fire the JSON payload to FastAPI server
-      const response = await fetch('http://localhost:8000/chat', {
+      const response = await fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: input, thread_id: "3" })
