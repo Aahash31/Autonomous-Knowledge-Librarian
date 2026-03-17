@@ -20,6 +20,15 @@ FastAPI, Python, LangGraph, LangChain, MongoDB Atlas
 └── .gitignore            # Ensures sensitive files (.env, venv) are not tracked
 ```
 
+## Setup & Installation
+
+1. **Clone the repo**
+2. **Install dependencies:** `pip install -r requirements.txt`
+3. **Configure Environment:** Create a `.env` with your `MONGO_URI` and `OPENAI_API_KEY` (can refer to .env.example).
+4. **Setup Frontend:** `cd frontend && npm install`
+5. **Run Backend:** `python agent.py`
+6. **Run Frontend:** `npm run dev`
+
 ## Tests
 `python test_eval.py`
 This validates:
