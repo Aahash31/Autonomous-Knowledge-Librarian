@@ -8,4 +8,4 @@ tempCodeRunnerFile.py
 frontend/node_modules/
 frontend/dist/
 .DS_Store
-*.pyc
+*.pyc.env
