@@ -52,11 +52,10 @@ retriever = vector_store.as_retriever(search_kwargs={"k": 3})
 
 # Define State
 class AgentState(TypedDict):
-    # 'add_messages' is the magic trick. It tells LangGraph: 
-    # "Don't overwrite the chat history, just append the new message to the list!"
+    
     messages: Annotated[list, add_messages]
     
-    # This will hold the raw text we pull from MongoDB
+    # This will hold the raw text to pull from MongoDB
     context: str
 
 # Define nodes
@@ -128,17 +127,17 @@ app = workflow.compile(checkpointer=memory)
 
 # FastAPI Web Server
 
-# Define what the incoming request from your future frontend will look like
+# Define what the incoming request from future frontend will look like
 class ChatRequest(BaseModel):
     message: str
-    thread_id: str = "1" # This keeps your LangGraph memory working!
+    thread_id: str = "1"
 
 # Initialize the API
 api = FastAPI(title="My Librarian API")
 
 api.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], # In production, you'd put your website URL here
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
