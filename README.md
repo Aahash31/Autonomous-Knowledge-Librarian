@@ -1,5 +1,5 @@
 # Autonomous-Knowledge-Librarian
-RAG personal knowledge management system. Provides verifiable answers based on a private document database.
+RAG personal knowledge management system. Provides verifiable answers based on a document database.
 
 The system follows a modern RAG (Retrieval-Augmented Generation) pipeline:
 1.  **Ingestion:** Documents are chunked and embedded into MongoDB Atlas.
