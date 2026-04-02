@@ -1,69 +1,135 @@
-.chat-container {
-  max-width: 700px;
-  margin: 40px auto;
+/* Layout Wrappers */
+.app-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
-.chat-box {
-  border: 1px solid #ddd;
-  height: 500px;
-  overflow-y: auto;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  background-color: #f9f9f9;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  height: 95vh;
 }
 
-.message {
-  padding: 12px 16px;
-  border-radius: 8px;
-  max-width: 80%;
-  line-height: 1.5;
+/* Header & Controls */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
 }
 
-.message.user {
-  background-color: #007bff;
-  color: white;
-  align-self: flex-end;
-  border-bottom-right-radius: 2px;
-}
-
-.message.librarian {
-  background-color: #e9ecef;
-  color: black;
-  align-self: flex-start;
-  border-bottom-left-radius: 2px;
-}
-
-.input-form {
+.controls-container {
   display: flex;
   gap: 10px;
 }
 
-input {
+/* Chat Box Area */
+.chat-container {
   flex: 1;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-button {
-  padding: 0 24px;
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #fcfcfc;
+}
+
+/* Message Bubbles (Matches your App.jsx classes) */
+.message-wrapper {
+  display: flex;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.message-bubble {
+  padding: 12px 16px;
+  border-radius: 18px;
+  max-width: 75%;
+  font-size: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+/* User Message Styling */
+.message-wrapper.user {
+  justify-content: flex-end;
+}
+
+.message-wrapper.user .message-bubble {
+  background-color: #007bff;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* Librarian Message Styling */
+.message-wrapper.librarian {
+  justify-content: flex-start;
+}
+
+.message-wrapper.librarian .message-bubble {
+  background-color: #f1f1f1;
+  color: #333;
+  border-bottom-left-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Input Form */
+.input-form {
+  padding: 20px;
+  background: white;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 10px;
+}
+
+.input-form input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  font-size: 15px;
+}
+
+.input-form button {
+  padding: 0 20px;
   background-color: #10a37f;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-weight: 600;
 }
 
-button:hover {
-  background-color: #0d8c6d;
+/* Buttons */
+.upload-button {
+  background-color: #f0f0f0;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  display: inline-block;
+}
+
+.clear-button {
+  background-color: #fff1f1;
+  color: #d93025;
+  border: 1px solid #f8d7da;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
 }

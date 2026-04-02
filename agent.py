@@ -12,12 +12,14 @@ from langchain_openai import ChatOpenAI
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langgraph.checkpoint.memory import MemorySaver
 
 # Web imports
 from fastapi import FastAPI
+from fastapi import UploadFile, File
 from pydantic import BaseModel
 import uvicorn
 
@@ -158,9 +160,57 @@ def chat_endpoint(request: ChatRequest):
     # Extract the AI's final answer
     ai_response = output_state["messages"][-1].content
     print(f"Sending response back to web.")
+
+    print(f"DEBUG: Final AI Response to send: {ai_response}")
     
     # Return it as a clean JSON package
     return {"response": ai_response}
+
+def process_new_notes(text: str):
+    """
+    Chunks the raw text and saves it to MongoDB Atlas.
+    """
+    print("Splitting text into chunks...")
+    # Use the Recursive splitter for high accuracy
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000, 
+        chunk_overlap=100
+    )
+    chunks = text_splitter.split_text(text)
+    
+    print(f"Adding {len(chunks)} new chunks to MongoDB...")
+    # Use the existing 'vector_store' defined at the top of agent.py
+    vector_store.add_texts(chunks)
+    return True
+
+@api.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+    print(f"Received file: {file.filename}")
+    
+    # Read the file content
+    content = await file.read()
+    try:
+        text = content.decode("utf-8")
+    except UnicodeDecodeError:
+        return {"status": "error", "message": "Only .txt and .md files are supported."}
+    
+    # Process and save to MongoDB
+    success = process_new_notes(text)
+    
+    if success:
+        return {"status": "success", "filename": file.filename}
+    return {"status": "error", "message": "Failed to process notes."}
+
+@api.delete("/clear-notes")
+async def clear_notes():
+    try:
+        # This deletes every document in your specific collection
+        result = collection.delete_many({})
+        print(f"🗑️ Cleared {result.deleted_count} notes from MongoDB.")
+        return {"status": "success", "deleted_count": result.deleted_count}
+    except Exception as e:
+        print(f"Error clearing database: {e}")
+        return {"status": "error", "message": str(e)}
 
 # Start the Server
 if __name__ == "__main__":
