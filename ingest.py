@@ -8,6 +8,7 @@ from pymongo.server_api import ServerApi
 from langchain_community.document_loaders import TextLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_ollama import OllamaEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
 
 # Load Credentials
@@ -44,9 +45,14 @@ def main():
     chunks = text_splitter.split_documents(documents)
     print(f"Split documents into {len(chunks)} searchable chunks.")
 
+    model_choice = os.getenv("MODEL_TYPE", "local").lower()
     # Initialize the Filing Clerk
-    print("Initializing Ollama Embeddings (nomic-embed-text)...")
-    embeddings = OllamaEmbeddings(model="nomic-embed-text")
+    if (model_choice == "cloud"):
+        print("Initializing OpenAI Embeddings (text-embedding-3-small)...")
+        embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+    else:
+        print("Initializing Ollama Embeddings (nomic-embed-text)...")
+        embeddings = OllamaEmbeddings(model="nomic-embed-text")
 
     # Upload to MongoDB Atlas
     print("Uploading chunks and vectors to MongoDB Atlas...")

@@ -9,6 +9,7 @@ from typing import Annotated, TypedDict
 from langchain_ollama import OllamaEmbeddings
 from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -34,15 +35,15 @@ collection = client[os.getenv("DB_NAME")][os.getenv("COLLECTION_NAME")]
 
 model_choice = os.getenv("MODEL_TYPE", "local").lower()
 
+# Initialize Models
 if (model_choice == "cloud"):
     print("Using gpt-4o-mini")
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0) # temperature 0 keeps it factual
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 else:
     print("Using llama3.2")
     llm = ChatOllama(model="llama3.2", temperature=0)
-
-# Initialize Models
-embeddings = OllamaEmbeddings(model="nomic-embed-text")
+    embeddings = OllamaEmbeddings(model="nomic-embed-text")
 
 # Setup Retriever
 vector_store = MongoDBAtlasVectorSearch(
